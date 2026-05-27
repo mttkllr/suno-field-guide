@@ -76,6 +76,19 @@ Asking for one element in a cloud tends to pull in the others. Use this strategi
 
 When combining weak + strong, the strong tag wins unless you actively counterbalance it. Example: "emo metal" defaults toward emo pop (12.2B pop connections vs. 0 direct metal links) unless you reinforce the metal side heavily and exclude pop.
 
+### Prompt Adherence Decays Within a Generation
+
+Community observation (see budmaniak workflow, Section 9): within a single generation, Suno's first 30–60 seconds adhere most tightly to your prompt. After roughly the first minute the model tends to:
+- Repeat motifs already established
+- Simplify structure
+- Fall back to generic patterns
+- Loop chord progressions
+- Lose lyrical coherence
+
+This is normal model behavior, not a bug. Two implications:
+- **For one-shot tracks**, front-load your most distinctive prompt elements — anything you need *guaranteed* should be present in the opening.
+- **For longer tracks**, plan to either build section-by-section (Extend method) or assemble from multiple candidates (Assemble From Parts) rather than chasing a perfect end-to-end pass. Both workflows are in Section 9.
+
 ---
 
 ## 2. Model Selection
@@ -85,14 +98,25 @@ When combining weak + strong, the strong tag wins unless you actively counterbal
 | v4 | Legacy/chaos/happy accidents | Outdated, unpredictable |
 | v4.5 | Fast iteration, consistent results | Mangles lyrics, needs batch generation |
 | v4.5+ | Controlled creativity, surprises | Unstable, throws in random elements |
-| **v5** | **Professional release, vocals, acoustic** | Insists on weird intro vocals, less adventurous, needs more iteration |
+| v5 | Professional release, vocals, acoustic | Insists on weird intro vocals, less adventurous, needs more iteration |
+| **v5.5** | **Most expressive vocals, personalization (Voices / Custom Models / My Taste), current default** | More sensitive to prompt quality — generic prompts give more obviously generic results |
 
 **Decision guide:**
-- Making something for release → **V5**, be patient
+- Making something for release → **V5.5**, with a precise prompt
+- You want your own voice on the track → **V5.5** + Voices (paid tiers)
+- You have a back catalog and want Suno to sound like *you* → **V5.5** + Custom Model (Pro/Premier)
 - Experimenting, want surprises → **V4.5+**
 - Testing ideas quickly → **V4.5**
 
-**V5 note on saturation:** V5 has *less* aggressive saturation than earlier models. This is a feature for professional contexts — over-saturation is a dead giveaway when sending tracks to mix engineers and is harder to clean up in post.
+**V5/V5.5 note on saturation:** Both V5 and V5.5 use *less* aggressive saturation than earlier models. This is a feature for professional contexts — over-saturation is a dead giveaway when sending tracks to mix engineers and is harder to clean up in post.
+
+**V5.5 prompt-sensitivity note:** Suno describes v5.5 as "more expressive" and more responsive to prompt quality. In practice: a vague prompt that limped along on v5 tends to sound *more* generic on v5.5, not less. Invest in the prompt before blaming the model.
+
+**V5.5 known issues (community-reported):**
+- **Mid-track degradation:** songs start clean, then hiss / get robotic / lose coherence partway through. Common complaint on v5.5; less common on v5 and v4.5.
+- **Pop reversion:** v5.5 frequently "forgets" the prompted style mid-track and drifts back toward generic pop.
+- **Extend is unreliable:** v5.5 Extend sometimes produces an entirely different song from the source rather than continuing it.
+- **Common workaround:** generate on **v4.5 or v5**, then run **Cover on v5.5** to keep v5.5's improved vocals without inheriting its mid-track problems. See [Hybrid Model Workflow](#hybrid-model-workflow-generate-on-v45v5-cover-on-v55) in Section 9.
 
 ---
 
@@ -719,7 +743,23 @@ punchy compression, polished professional sound"
 
 ### Exclude Styles
 
-More reliable than negation language in your main prompt:
+Two distinct mechanisms — don't confuse them:
+
+**1. The Exclude field (recommended, more reliable)**
+In Custom Mode → Advanced Options there's a dedicated Exclude input. Type instruments, styles, or vocal types you don't want there. Suno renders excluded items with a leading `-` in the song's sidebar. This is a first-class feature — more reliable than any inline negation.
+
+**2. Inline negation in the Style field (unofficial fallback)**
+You can add `no [element]` inline in the style field — e.g. `Indie folk, acoustic guitar, 95 BPM, no drums, no autotune`. Caveats from community testing:
+- **Use `no X`, not `don't add X`.** Suno doesn't reliably parse "don't."
+- **Place exclusions at the end of the style prompt.** Positives are processed first; exclusions are applied after.
+- **The `-X` minus-sign form** (e.g. `-scraping sounds`) is how Suno *displays* exclusions in the UI — its behavior as *input* in the style field is undocumented. The verified inline form is `no X`.
+- **Less reliable than the Exclude field.** Use inline when you're already at the prompting stage and don't want to switch contexts, or when an exclusion targets a specific descriptor that the Exclude field doesn't accept cleanly.
+
+**Combined approach** (used in this guide's [Getting Guitar + Voice Only](#getting-guitar--voice-only-no-drums-no-bass) example): put `no drums, no percussion` inline *and* `drums, percussion` in the Exclude field. Belt and braces — the most reliable way to eliminate something stubborn.
+
+**Don't over-exclude.** Keep total exclusions to ~2–3 maximum. Too many makes the arrangement unstable — Suno needs *something* to build with.
+
+**Common exclusion targets:**
 
 | Goal | Exclude |
 |------|---------|
@@ -768,6 +808,42 @@ The most important workflow improvement for quality output:
 Each extend reads from existing audio context — you're continuing something already approved, not prompting blind.
 
 **Extend timing:** Extend from points of **building momentum**, not after natural endings. Mid-verse produces better continuations than post-chorus.
+
+### Assemble From Parts (Studio Workflow)
+
+A different philosophy than the Extend method. Instead of building one continuous track by extending forward, you generate 4–6 parallel candidates and **stitch the best sections of each together in Suno Studio (or any DAW)**. Best for full-length tracks with instrumental breaks, solos, and dynamic arrangement — things Suno rarely produces in a single pass.
+
+**The core constraint that makes this work:**
+
+> **Lock BPM and key in the style field, and reuse the same values for every generation in the project.**
+
+Put them at the very start of the style field, e.g. `108 BPM, key of G minor, ...`. Once every candidate shares BPM and key, sections from different generations align on the beat grid and you can splice freely.
+
+**Why this works:**
+- Suno's first 30–60 seconds adhere most tightly to your prompt; later sections drift (see Section 1). Treating each generation as a *source of one good section* is more efficient than hoping any single generation is good end-to-end.
+- Long instrumental breaks, solos, and extended bridges almost never appear in a one-pass generation. You build them later.
+- Mashups and short-lyric tracks won't exceed the length of their lyrics — Suno doesn't reliably invent instrumental filler to stretch runtime. `[Instrumental]` tags may add a measure or two but won't carry a real solo section.
+
+**The workflow:**
+
+1. **Seed with a strong lyrical hook.** Idioms and common phrases ("come as you are," "wildest dreams") anchor the generation; awkward AI lyrics can be fixed later.
+2. **Lock BPM + key in the style field.** Same values in every generation for this project.
+3. **Generate 4–6 candidates.** You're not hunting for *the* song — you're collecting verses, choruses, bridges, intros, and outros.
+4. **Assemble in Suno Studio (or your DAW).** Drag in the candidates, cut on the downbeat, swap sections freely: Verse from Gen 1, Chorus from Gen 2, Bridge from Gen 4.
+5. **Generate a dedicated instrumental track for breaks.** Take your best generation, split stems (Suno's built-in splitter is ~10 credits and integrates with Studio), download the instrumental, run it through **Create → Remix → Cover** with prompts like *"fully expressive instrumental arrangement, active fills, evolving textures, build into a lead solo, never static."* Extract the solos, breakdowns, and reprises from the result and drop them into the arrangement.
+6. **Export.**
+
+**Lyric fixes inside Studio:**
+
+| Method | When to use | Settings |
+|--------|-------------|----------|
+| **Replace** (click section, edit lyrics, open Advanced) | Changing a few words, keeping the music | Weirdness 20–30, Style Influence 60–70, Audio Influence 70–80. Set Replace to **Song**, not Vocals Only — keeps instruments synced to new phrasing. |
+| **Sample** (Create → Sample → highlight stanza) | Replace gave weird results | Same influence settings as Replace |
+| **Cover** (best structure → Remix → Cover, paste new lyrics) | Rewriting the whole song over the same arrangement | Same influence settings |
+
+**When to use this vs. Extend:**
+- **Extend method** — you have a clear single-take vision and want continuity. Best for short-form, tight arrangements, tracks where vibe matters more than structural variety.
+- **Assemble method** — you want a full-length release with real dynamics, instrumental sections, and section-level variety. Best when you'd rather spend 1–2 hours in Studio than burn 30 generations chasing a one-shot win.
 
 ### Quality Over Volume
 
@@ -907,7 +983,7 @@ For extreme genres, describe the sound paragraph-style rather than stacking genr
 
 The paragraph approach gives Suno more context to triangulate from. Genre stacking above 2-3 tags causes confusion.
 
-### Official Suno v5 Guidance
+### Official Suno v5 Guidance (still applies to v5.5)
 
 From the Suno team directly:
 
@@ -931,6 +1007,60 @@ From the Suno team directly:
 - Works best with 1–4 reference songs
 - Be selective with playlists — too many songs dilutes the reference
 - Drag and drop directly from your workspace into the Create panel: two options appear — *Drop here to Remix* or *Drop here to use as Inspiration*
+
+### v5.5: Voices, Custom Models, My Taste
+
+v5.5 (released March 26, 2026) is primarily a **personalization** release rather than a new prompt engine. Suno describes the model itself as "more expressive" and more responsive to prompt quality — meaning prompt discipline matters more, not less. No documented changes to style-field tag budget or meta-tag behavior; assume parity with v5 until field-tested otherwise.
+
+**Voices (paid tiers)** — evolution of Personas. Capture your own singing voice and use it as the vocal in any generation. Solves the "same singer across multiple tracks" problem Personas only half-solved.
+
+- **Upload spec (from Suno docs):** 15 seconds to 4 minutes of audio; Suno keeps the best 2 minutes. Acapella produces the cleanest results, but tracks with backing music are accepted — Suno runs stem extraction automatically.
+- **Verification step:** Suno displays a short phrase for you to read aloud. The spoken recording is matched against the singing recording to confirm same person, and against the displayed text to confirm you said the right words. You then check a rights-confirmation box before saving.
+- **Tier gating:** Suno's announcement and community sources put Voices on paid tiers; the help center doesn't enumerate plans explicitly. Confirm in your account before counting on it.
+- **Style-bleed gotcha:** A Voice created from a *stylistically distinctive* source track will inject that style back into subsequent generations at **Audio Influence above ~20%**, usually around the midpoint or verse 2, in roughly 80% of attempts (community-reported, Cenn73 on r/SunoAI). If you want the Voice's *timbre* without its *style*, train Voices on cleaner / less style-heavy source recordings, and keep Audio Influence low when generating in a non-matching genre.
+
+**Custom Models (Pro/Premier)** — upload your own finished tracks to fine-tune a personal v5.5 variant.
+
+- **Minimum:** as few as 6 tracks. **Maximum:** 3 custom models per account.
+- **Training time:** ~2–5 minutes per model.
+- **Ownership:** you must own the rights to every track you upload.
+- **Sharing:** Custom Models are private and cannot be shared between users.
+- **Bulk Upload** is supported for batches.
+- **Community guidance** (not from official docs): keep training tracks **stylistically consistent** — feeding the model a random genre mix produces a model that learned nothing in particular.
+
+**My Taste (all users)** — adapts to your generation and listening patterns over time, biasing future outputs toward your preferred genres and moods. Also powers the **Style Augmentation** magic-wand button on the style field, which expands a short prompt using your taste profile.
+
+**Practical implications:**
+- If you've been using a hand-built Persona for vocal consistency on owned-vocal projects, **a Voice will probably replace it**.
+- Custom Models reduce how much per-prompt detail you need to reach an "on-brand" sound — but only after they've been trained on consistent material.
+- My Taste is silent influence: if your outputs start drifting toward something you don't want, check whether My Taste has been learning from generations you didn't actually like.
+
+### MILO-1080 (Adjacent Release)
+
+Launched alongside the v5.5 cycle (March 2026, currently in Suno's Labs area): **MILO-1080** — a 16-track step sequencer and synth designer with MIDI support. Tracks can be populated with prompted sample generations, clips from your Suno library, or sounds designed in MILO's synth engine. This is a production tool for people who know what a step sequencer is, not a generative shortcut. Out of scope for this guide, but worth knowing it exists if you're moving from Suno generations into a more hands-on production workflow.
+
+### Hybrid Model Workflow: Generate on v4.5/v5, Cover on v5.5
+
+Community-converged workaround for v5.5's mid-track issues: do the **composition and structure** on v4.5 or v5, then **Cover on v5.5** to inherit v5.5's stronger vocals without inheriting its audio degradation, pop reversion, or unreliable extend.
+
+**When to reach for it:**
+- v5.5 keeps falling apart mid-track and tighter prompting hasn't helped
+- You want v5.5-quality vocals on a v4.5 instrumental groove
+- Extend on v5.5 is producing different songs instead of continuations
+
+**Why it works:** Cover takes structural and audio context from the source, so the v4.5/v5 track anchors the arrangement while v5.5 contributes the vocal performance. Reported independently by multiple users in the r/SunoAI v5.5 master-prompt thread.
+
+### v5.5 Intro & Structure Fixes
+
+Two specific community fixes for known v5.5 quirks (Cenn73 on r/SunoAI):
+
+**Killing the "stuttering intro":** v5.5 sometimes opens with hesitation or repeated phrasing. Replace `[Intro]` with `[Short Instrumental Intro]` and follow it with `[Hook]` rather than `[Verse]`. The opening becomes a defined musical event instead of an ambiguous lead-in.
+
+Also tried: `[Urgent Intro]` (community-suggested, less verified).
+
+**Killing the stripped-down verse-ending drift:** Once your lyrics are rhythmically and lyrically locked, **remove all `[Verse]` and `[Chorus]` tags**. Keep `[Bridge]`, `[Drop]`, and `[Hook]` only. **Remove every empty line** — Suno reads blank lines as a pause or instrumental break and will hollow out the section. Crush stanzas together.
+
+Fragile (Suno is fickle) but reproducible enough to be worth trying before burning more credits on the same prompt.
 
 ### Persona Workaround: Remaster → Persona
 
@@ -1617,6 +1747,15 @@ ethereal / lush / shimmering / crescendo (use "building intensity") / realistic
 5. Master before publishing
 ```
 
+### Assemble Workflow
+```
+1. Lock BPM + key in the style field (same values every generation)
+2. Generate 4–6 candidates from the same prompt
+3. Assemble best sections in Suno Studio: verse from one, chorus from another
+4. For instrumental breaks: stem-split best gen, Cover-Remix the instrumental
+5. Extract solos/breakdowns, drop into arrangement, export
+```
+
 ### The Success Formula
 ```
 BASE GENRE + DOMINANT MOOD + LEAD INSTRUMENT + VOCAL STYLE +
@@ -1838,6 +1977,45 @@ All posts by u/Grenar, published on r/AiPizza. Primary source for Section 10.
 - Author: u/doomsboygamingv2
 - URL: https://www.reddit.com/r/SunoAI/comments/1of8wt9/
 - Content: Supplement to Section 13 — AI cliché word list, specific time trap (3 AM, 2 AM), academic language red flags, multi-stage writing process. Partial overlap with existing Section 13.
+
+**[25] Guide: Stop Brute-Forcing Suno Like a Slot Machine**
+- Author: u/budmaniak
+- URL: https://www.reddit.com/r/SunoAI/comments/1tooamm/
+- Content: Studio-centric assembly workflow — BPM/key locking, 4–6 generation rule, Replace/Sample/Cover lyric-fix methods with specific slider settings, stem-split + Cover-Remix for instrumental breaks. Source for "Assemble From Parts" in Section 9 and the prompt-adherence-decays note in Section 1.
+
+**[26] Suno v5.5: More Expressive. More You. (Official Blog)**
+- Author: Suno team
+- URL: https://suno.com/blog/v5-5
+- Content: Official v5.5 release announcement (March 26, 2026). Voices, Custom Models, My Taste. Source for v5.5 entries in Sections 2 and 9.
+
+**[27] What's New in v5.5 (Help Center)**
+- Author: Suno team
+- URL: https://help.suno.com/en/articles/11362305
+- Content: Help-center overview of v5.5 features. Confirms Custom Models tier gating (Pro/Premier), 3-model maximum, and My Taste availability to all users.
+
+**[28] Voices: Use Your Voice in Suno (Help Center)**
+- Author: Suno team
+- URL: https://help.suno.com/en/articles/11362369
+- Content: Voices upload spec (15s–4min, acapella preferred, auto stem extraction), verification process (spoken-phrase matching), rights-confirmation requirement.
+
+**[29] Custom Models in v5.5 (Help Center)**
+- Author: Suno team
+- URL: https://help.suno.com/en/articles/11362497
+- Content: Custom Models requirements — minimum 6 tracks, 3 models max, Pro/Premier tier, ~2–5 min training time, ownership requirement, bulk upload, no inter-user sharing.
+
+**[30] MILO-1080 Coverage**
+- Sources: Music Ally (https://musically.com/2026/03/24/sunos-latest-move-is-milo-1080-an-ai-driven-step-sequencer/), MusicRadar, RouteNote
+- Content: 16-track step sequencer + synth designer with MIDI support, launched March 2026 in Suno Labs. Background for the MILO-1080 mention in Section 9.
+
+**[31] Cracking the v5.5 Code: Community Master Prompt Thread**
+- Author: u/BuffaloConscious7919 (OP), with contributions from u/Cenn73, u/treidan, u/West-Negotiation-716, u/CevapciciAllin, u/pixellegolas, u/atth3bottom, u/Andeva82, others
+- URL: https://www.reddit.com/r/SunoAI/comments/1sfqdlj/
+- Content: Field reports on v5.5 problems (mid-track audio degradation, pop reversion, broken Extend). Sources for: "V5.5 known issues" callout in Section 2, "Hybrid Model Workflow" subsection in Section 9, "Voice style-bleed gotcha" in v5.5 subsection, and "v5.5 Intro & Structure Fixes" subsection.
+
+**[32] Suno Help Center: "How do I exclude elements of a song?"**
+- Author: Suno team
+- URL: https://help.suno.com/en/articles/3161921
+- Content: Official documentation of the Exclude field in Custom Mode → Advanced Options. Source for clarifying official-vs-inline exclusion mechanisms in the expanded Section 8 "Exclude Styles" subsection.
 
 ---
 
