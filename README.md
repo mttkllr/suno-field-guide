@@ -380,6 +380,21 @@ Lyrics here
 Lyrics here
 ```
 
+### Closing the Structure
+
+End your lyrics with `[End]` on its own line. Without a terminal tag, Suno will sometimes overrun the natural finish — fading mid-verse, tacking on an instrumental ramble, or hard-cutting at the length limit. This is a steer, not a guarantee: community testing puts it around 85–90% effective, and it tends to fail when the section right before it runs long or leaves a structure tag unclosed. If `[End]` keeps getting ignored, shorten the final section and make sure every `[Section]` above it is well-formed.
+
+**On tag placement (unverified):** A widely-shared claim is that modifier tags should sit *before* a section header, not after — the theory being that Suno reads top-to-bottom, so tags placed under the header arrive after generation for that section has already started:
+
+```
+[Anthemic]
+[Powerful Drums]
+[Chorus]
+We rise up, we fall down
+```
+
+The source is a promotional post and the claim is untested here, so treat it as an A/B to run, not a rule. Note that pipe-stacking (`[Chorus | Anthemic | Powerful Drums]`, see [Meta Tag Stacking](#meta-tag-stacking) and Trick #11) puts the modifiers and the header in the same token span and sidesteps the ordering question entirely — it's the more reliable pattern when section-level control matters.
+
 ### Structure Control: START_ON
 
 Skip the intro and begin immediately on lyrics:
@@ -768,6 +783,18 @@ You can add `no [element]` inline in the style field — e.g. `Indie folk, acous
 | Acoustic only | Electronic, Synthesizer, Drum Machine |
 | Pure rock | Electronic, Hip Hop, Pop |
 | Pure classical | Modern, Electronic, Pop |
+
+### Killing Intro Hums & Vocalized Intros
+
+V5's most-reported annoyance: songs that open with a wordless hum, an "ooh/ahh" vocalise, or a spoken/ambient intro before the actual lyrics start (this is the "insists on weird intro vocals" behavior flagged in [Section 2](#2-model-selection)). The fix is a dense **negative-style** list aimed specifically at intro vocalizations — stack these in the Exclude Styles box:
+
+```
+humming, hums, mmm vocals, ooh vocals, ahh vocals, la la vocals, wordless vocals,
+vocalizing before lyrics, intro vocals, spoken intro, whispered intro, ad-lib intro,
+instrumental intro, ambient intro, cinematic intro, long intro
+```
+
+Combine with `[START_ON: TRUE]` and `[START_ON: "first words of your lyrics"]` (see [Section 4](#4-song-structure--meta-tags)) to push Suno straight into the first line. The exclude list removes the *hum*; START_ON removes the *runway* in front of the vocal. Using both is more reliable than either alone.
 
 ### Quick Reference by Genre
 
@@ -2017,6 +2044,16 @@ All posts by u/Grenar, published on r/AiPizza. Primary source for Section 10.
 - URL: https://help.suno.com/en/articles/3161921
 - Content: Official documentation of the Exclude field in Custom Mode → Advanced Options. Source for clarifying official-vs-inline exclusion mechanisms in the expanded Section 8 "Exclude Styles" subsection.
 
+**[33] r/SunoAI — "Get rid of the intro hums"**
+- Author: u/PureRely
+- URL: https://www.reddit.com/r/SunoAI/comments/1u1vxz8/
+- Content: Negative-style list targeting wordless intros, hums, and spoken/ambient intros. Source for "Killing Intro Hums & Vocalized Intros" in Section 8.
+
+**[34] r/SunoAI — "Your Suno song has a structure problem — here's the 3-part fix"**
+- Author: u/sunoarchitect
+- URL: https://www.reddit.com/r/SunoAI/comments/1u7asio/
+- Content: Promotional post for a free structure-checking tool (sunoarchitect.com). Treated skeptically — its syllable-consistency and genre-order points duplicate Sections 6 and 5, and the comment thread flags it as AI-generated marketing. Only the honest `[End]` reliability caveat (surfaced by the author in replies) and the unverified tag-placement claim were kept. Source for "Closing the Structure" in Section 4.
+
 ---
 
 ## 15. Contributing
@@ -2041,4 +2078,4 @@ This guide is a living document. If you have a technique, prompt pattern, or fin
 
 ---
 
-*Last updated: March 2026. Suno is a rapidly evolving platform — techniques may change as models update. When something stops working, the model has likely changed, not you.*
+*Last updated: June 2026. Suno is a rapidly evolving platform — techniques may change as models update. When something stops working, the model has likely changed, not you.*
