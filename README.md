@@ -1,8 +1,8 @@
 # Suno Field Guide
 
-A community-compiled reference for getting consistent, professional results out of Suno AI. Covers everything from how Suno actually processes prompts under the hood, to song structure and meta tag syntax, to post-processing and mastering finished tracks. Synthesized from field testing, community guides, official Suno documentation, and Grenar's Dirty Tricks series.
+A community-compiled reference for getting consistent, professional results out of Suno AI. Covers everything from how Suno actually processes prompts, to song structure and meta tag syntax, to post-processing and mastering finished tracks. Synthesized from field testing, community guides, official Suno documentation, and Grenar's Dirty Tricks series.
 
-This is not a beginner tutorial, it assumes you have used Suno at least a little and want to go deeper. Start with Section 1 if you want the mental model, or jump to whatever section is relevant to the problem you're trying to solve.
+This is not a beginner tutorial. It assumes you have used Suno at least a little and want to go deeper. Start with Section 1 if you want the mental model, or jump to whatever section is relevant to the problem you're trying to solve.
 
 ---
 
@@ -163,7 +163,7 @@ Indie folk, 92 BPM, melancholic, fingerstyle acoustic guitar, whispered vocals, 
 
 **Use conjunctions for essential elements.** "And" and "with" treat items as required rather than optional.
 
-**Verify parsing on desktop.** Mouse over the style panel, each section should be underlined as a complete unit. If not, you're missing periods.
+**Verify parsing on desktop.** Mouse over the style panel. Each section should be underlined as a complete unit. If not, you're missing periods.
 
 ### MAX Mode Template
 
@@ -393,7 +393,7 @@ End your lyrics with `[End]` on its own line. Without a terminal tag, Suno will 
 We rise up, we fall down
 ```
 
-The source is a promotional post and the claim is untested here, so treat it as an A/B to run, not a rule. Note that pipe-stacking (`[Chorus | Anthemic | Powerful Drums]`, see [Meta Tag Stacking](#meta-tag-stacking) and Trick #11) puts the modifiers and the header in the same token span and sidesteps the ordering question entirely, it's the more reliable pattern when section-level control matters.
+The source is a promotional post and the claim is untested here, so treat it as an A/B to run, not a rule. Note that pipe-stacking (`[Chorus | Anthemic | Powerful Drums]`, see [Meta Tag Stacking](#meta-tag-stacking) and Trick #11) puts the modifiers and the header in the same token span and sidesteps the ordering question entirely. It's the more reliable pattern when section-level control matters.
 
 ### Structure Control: START_ON
 
@@ -546,7 +546,7 @@ High Energy, Anthemic
 ```
 space rock, psychedelic rock, desert rock, stoner rock, shoegaze
 ```
-*Note: Taxonomy order matters, first genre has most influence, each subsequent tag has diminishing weight.*
+*Note: Taxonomy order matters: first genre has most influence, each subsequent tag has diminishing weight.*
 
 ### Style Field Pro Tips
 
@@ -832,7 +832,7 @@ The most important workflow improvement for quality output:
 3. **Extend** into Verse 1, explicitly directing that section
 4. Continue: Pre-Chorus → Chorus → Verse 2 → Bridge → Final Chorus → Outro
 
-Each extend reads from existing audio context, you're continuing something already approved, not prompting blind.
+Each extend reads from existing audio context. You're continuing something already approved, not prompting blind.
 
 **Extend timing:** Extend from points of **building momentum**, not after natural endings. Mid-verse produces better continuations than post-chorus.
 
@@ -849,7 +849,7 @@ Put them at the very start of the style field, e.g. `108 BPM, key of G minor, ..
 **Why this works:**
 - Suno's first 30–60 seconds adhere most tightly to your prompt; later sections drift (see Section 1). Treating each generation as a *source of one good section* is more efficient than hoping any single generation is good end-to-end.
 - Long instrumental breaks, solos, and extended bridges almost never appear in a one-pass generation. You build them later.
-- Mashups and short-lyric tracks won't exceed the length of their lyrics, Suno doesn't reliably invent instrumental filler to stretch runtime. `[Instrumental]` tags may add a measure or two but won't carry a real solo section.
+- Mashups and short-lyric tracks won't exceed the length of their lyrics. Suno doesn't reliably invent instrumental filler to stretch runtime. `[Instrumental]` tags may add a measure or two but won't carry a real solo section.
 
 **The workflow:**
 
@@ -1027,7 +1027,7 @@ From the Suno team directly:
 
 **Song length:**
 - Shorter lyrical inputs cause shorter generations
-- Cover, Inspo, and Persona features naturally reduce generated length, this is by design, not a bug
+- Cover, Inspo, and Persona features naturally reduce generated length. This is by design, not a bug
 - Extend is the correct tool for building out length
 
 **Inspo feature:**
@@ -1041,7 +1041,7 @@ v5.5 (released March 26, 2026) is primarily a **personalization** release rather
 
 **Voices (paid tiers):** evolution of Personas. Capture your own singing voice and use it as the vocal in any generation. Solves the "same singer across multiple tracks" problem Personas only half-solved.
 
-- **Upload spec (from Suno docs):** 15 seconds to 4 minutes of audio; Suno keeps the best 2 minutes. Acapella produces the cleanest results, but tracks with backing music are accepted, Suno runs stem extraction automatically.
+- **Upload spec (from Suno docs):** 15 seconds to 4 minutes of audio; Suno keeps the best 2 minutes. Acapella produces the cleanest results, but tracks with backing music are accepted. Suno runs stem extraction automatically.
 - **Verification step:** Suno displays a short phrase for you to read aloud. The spoken recording is matched against the singing recording to confirm same person, and against the displayed text to confirm you said the right words. You then check a rights-confirmation box before saving.
 - **Tier gating:** Suno's announcement and community sources put Voices on paid tiers; the help center doesn't enumerate plans explicitly. Confirm in your account before counting on it.
 - **Style-bleed gotcha:** A Voice created from a *stylistically distinctive* source track will inject that style back into subsequent generations at **Audio Influence above ~20%**, usually around the midpoint or verse 2, in roughly 80% of attempts (community-reported, Cenn73 on r/SunoAI). If you want the Voice's *timbre* without its *style*, train Voices on cleaner / less style-heavy source recordings, and keep Audio Influence low when generating in a non-matching genre.
@@ -1181,7 +1181,7 @@ Tools: FabFilter Pro-Q 3, Reaper's ReaEQ, Audacity's built-in EQ (less precise b
 
 V5 in particular can produce slightly harsh sibilance or bright harshness in the 5–10kHz range, especially on vocals.
 
-Fix: A gentle shelf cut above 8kHz (1–2dB) or a dynamic EQ / de-esser targeting the specific harsh frequency. Avoid broad cuts, they kill the air and make the track sound dull.
+Fix: A gentle shelf cut above 8kHz (1–2dB) or a dynamic EQ / de-esser targeting the specific harsh frequency. Avoid broad cuts. They kill the air and make the track sound dull.
 
 Tools: FabFilter Pro-DS (de-esser), Soothe 2 (dynamic resonance suppression), or a simple EQ shelf.
 
@@ -1267,7 +1267,7 @@ Mastering: Clean, modern, professional sound.
 
 Settings: Weirdness 0, Style Influence 100, Audio Influence 100.
 
-**Critical:** Avoid style or mood descriptors, they cause the cover to drift from the original's character. The goal here is quality improvement, not reinterpretation. Covers preserve structure and genre when the style field is kept minimal.
+**Critical:** Avoid style or mood descriptors. They cause the cover to drift from the original's character. The goal here is quality improvement, not reinterpretation. Covers preserve structure and genre when the style field is kept minimal.
 
 ---
 
@@ -1321,7 +1321,7 @@ These techniques operate at the typography and syntax level inside the lyrics fi
 
 ### Trick #4 — Live Concert Mode *(Reliability: High)*
 
-**What it does:** Environmental cues inside lyrics bias Suno toward live recordings, audience noise, imperfect timing, and raw vocal delivery. You are not "adding sound effects", you are changing the performance context.
+**What it does:** Environmental cues inside lyrics bias Suno toward live recordings, audience noise, imperfect timing, and raw vocal delivery. You are not "adding sound effects." You are changing the performance context.
 
 **Syntax:**
 
