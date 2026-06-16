@@ -2,7 +2,7 @@
 
 A community-compiled reference for getting consistent, professional results out of Suno AI. Covers everything from how Suno actually processes prompts under the hood, to song structure and meta tag syntax, to post-processing and mastering finished tracks. Synthesized from field testing, community guides, official Suno documentation, and Grenar's Dirty Tricks series.
 
-This is not a beginner tutorial — it assumes you have used Suno at least a little and want to go deeper. Start with Section 1 if you want the mental model, or jump to whatever section is relevant to the problem you're trying to solve.
+This is not a beginner tutorial, it assumes you have used Suno at least a little and want to go deeper. Start with Section 1 if you want the mental model, or jump to whatever section is relevant to the problem you're trying to solve.
 
 ---
 
@@ -64,9 +64,9 @@ Asking for one element in a cloud tends to pull in the others. Use this strategi
 
 ### Escaping Genre Gravity
 
-1. **Explicit exclusions** — tell Suno what you don't want
-2. **Force weird combinations** — "emo industrial," "orchestral phonk," "math rock gospel" push the model into territory where defaults don't apply
-3. **Strategic contrast** — emphasize elements that naturally repel what you're avoiding
+1. **Explicit exclusions:** tell Suno what you don't want
+2. **Force weird combinations:** "emo industrial," "orchestral phonk," "math rock gospel" push the model into territory where defaults don't apply
+3. **Strategic contrast:** emphasize elements that naturally repel what you're avoiding
 
 ### Weak vs. Strong Tags
 
@@ -86,7 +86,7 @@ Community observation (see budmaniak workflow, Section 9): within a single gener
 - Lose lyrical coherence
 
 This is normal model behavior, not a bug. Two implications:
-- **For one-shot tracks**, front-load your most distinctive prompt elements — anything you need *guaranteed* should be present in the opening.
+- **For one-shot tracks**, front-load your most distinctive prompt elements. Anything you need *guaranteed* should be present in the opening.
 - **For longer tracks**, plan to either build section-by-section (Extend method) or assemble from multiple candidates (Assemble From Parts) rather than chasing a perfect end-to-end pass. Both workflows are in Section 9.
 
 ---
@@ -99,7 +99,7 @@ This is normal model behavior, not a bug. Two implications:
 | v4.5 | Fast iteration, consistent results | Mangles lyrics, needs batch generation |
 | v4.5+ | Controlled creativity, surprises | Unstable, throws in random elements |
 | v5 | Professional release, vocals, acoustic | Insists on weird intro vocals, less adventurous, needs more iteration |
-| **v5.5** | **Most expressive vocals, personalization (Voices / Custom Models / My Taste), current default** | More sensitive to prompt quality — generic prompts give more obviously generic results |
+| **v5.5** | **Most expressive vocals, personalization (Voices / Custom Models / My Taste), current default** | More sensitive to prompt quality, generic prompts give more obviously generic results |
 
 **Decision guide:**
 - Making something for release → **V5.5**, with a precise prompt
@@ -108,7 +108,7 @@ This is normal model behavior, not a bug. Two implications:
 - Experimenting, want surprises → **V4.5+**
 - Testing ideas quickly → **V4.5**
 
-**V5/V5.5 note on saturation:** Both V5 and V5.5 use *less* aggressive saturation than earlier models. This is a feature for professional contexts — over-saturation is a dead giveaway when sending tracks to mix engineers and is harder to clean up in post.
+**V5/V5.5 note on saturation:** Both V5 and V5.5 use *less* aggressive saturation than earlier models. This is a feature for professional contexts. Over-saturation is a dead giveaway when sending tracks to mix engineers and is harder to clean up in post.
 
 **V5.5 prompt-sensitivity note:** Suno describes v5.5 as "more expressive" and more responsive to prompt quality. In practice: a vague prompt that limped along on v5 tends to sound *more* generic on v5.5, not less. Invest in the prompt before blaming the model.
 
@@ -163,7 +163,7 @@ Indie folk, 92 BPM, melancholic, fingerstyle acoustic guitar, whispered vocals, 
 
 **Use conjunctions for essential elements.** "And" and "with" treat items as required rather than optional.
 
-**Verify parsing on desktop.** Mouse over the style panel — each section should be underlined as a complete unit. If not, you're missing periods.
+**Verify parsing on desktop.** Mouse over the style panel, each section should be underlined as a complete unit. If not, you're missing periods.
 
 ### MAX Mode Template
 
@@ -192,7 +192,7 @@ Suno will sing anything that *looks singable*. Common triggers:
 - Prose with natural rhythmic cadence
 
 **Mitigation:**
-- Keep style prompts dense and technical — hard to sing
+- Keep style prompts dense and technical, hard to sing
 - Always put something in the lyrics box
 - Add `///*****///` at the top of the lyrics box as a divider
 - Avoid quotes outside structured fields
@@ -382,9 +382,9 @@ Lyrics here
 
 ### Closing the Structure
 
-End your lyrics with `[End]` on its own line. Without a terminal tag, Suno will sometimes overrun the natural finish — fading mid-verse, tacking on an instrumental ramble, or hard-cutting at the length limit. This is a steer, not a guarantee: community testing puts it around 85–90% effective, and it tends to fail when the section right before it runs long or leaves a structure tag unclosed. If `[End]` keeps getting ignored, shorten the final section and make sure every `[Section]` above it is well-formed.
+End your lyrics with `[End]` on its own line. Without a terminal tag, Suno will sometimes overrun the natural finish, fading mid-verse, tacking on an instrumental ramble, or hard-cutting at the length limit. This is a steer, not a guarantee: community testing puts it around 85–90% effective, and it tends to fail when the section right before it runs long or leaves a structure tag unclosed. If `[End]` keeps getting ignored, shorten the final section and make sure every `[Section]` above it is well-formed.
 
-**On tag placement (unverified):** A widely-shared claim is that modifier tags should sit *before* a section header, not after — the theory being that Suno reads top-to-bottom, so tags placed under the header arrive after generation for that section has already started:
+**On tag placement (unverified):** A widely-shared claim is that modifier tags should sit *before* a section header, not after, the theory being that Suno reads top-to-bottom, so tags placed under the header arrive after generation for that section has already started:
 
 ```
 [Anthemic]
@@ -393,7 +393,7 @@ End your lyrics with `[End]` on its own line. Without a terminal tag, Suno will 
 We rise up, we fall down
 ```
 
-The source is a promotional post and the claim is untested here, so treat it as an A/B to run, not a rule. Note that pipe-stacking (`[Chorus | Anthemic | Powerful Drums]`, see [Meta Tag Stacking](#meta-tag-stacking) and Trick #11) puts the modifiers and the header in the same token span and sidesteps the ordering question entirely — it's the more reliable pattern when section-level control matters.
+The source is a promotional post and the claim is untested here, so treat it as an A/B to run, not a rule. Note that pipe-stacking (`[Chorus | Anthemic | Powerful Drums]`, see [Meta Tag Stacking](#meta-tag-stacking) and Trick #11) puts the modifiers and the header in the same token span and sidesteps the ordering question entirely, it's the more reliable pattern when section-level control matters.
 
 ### Structure Control: START_ON
 
@@ -546,7 +546,7 @@ High Energy, Anthemic
 ```
 space rock, psychedelic rock, desert rock, stoner rock, shoegaze
 ```
-*Note: Taxonomy order matters — first genre has most influence, each subsequent tag has diminishing weight.*
+*Note: Taxonomy order matters, first genre has most influence, each subsequent tag has diminishing weight.*
 
 ### Style Field Pro Tips
 
@@ -563,9 +563,9 @@ space rock, psychedelic rock, desert rock, stoner rock, shoegaze
 
 Effective lyric structure requires three decisions upfront:
 
-1. **Genre** — worship, EDM, pop-rock, country, experimental
-2. **Emotional space** — intimate/vulnerable, stadium/anthemic, nostalgic, raw/angry
-3. **Constraints** — tempo requirements, length, content restrictions
+1. **Genre:** worship, EDM, pop-rock, country, experimental
+2. **Emotional space:** intimate/vulnerable, stadium/anthemic, nostalgic, raw/angry
+3. **Constraints:** tempo requirements, length, content restrictions
 
 Constraints are creative assets, not limitations. They prevent generic "AI soup."
 
@@ -575,7 +575,7 @@ Constraints are creative assets, not limitations. They prevent generic "AI soup.
 Intro         → Establishes sonic world, often instrumental
 Verse         → Tells the story; lyrics change each time
 Pre-Chorus    → Builds tension toward chorus
-Chorus        → Main thesis and emotional punchline — what everyone remembers
+Chorus        → Main thesis and emotional punchline, what everyone remembers
 Bridge        → Different angle or emotional shift; break from repetition
 Outro/Tag     → Final repeated idea or wind-down
 Instrumental  → Musical breathing space
@@ -596,7 +596,7 @@ Suno aligns syllables against beats. Inconsistent line lengths cause awkward phr
 
 ### The One Metaphor Rule
 
-Pick one central metaphor and go deep. Water, fire, architecture, light — pick one and explore all its facets. Songs that switch metaphors (river → fire → clouds → earth) give listeners no visual anchor.
+Pick one central metaphor and go deep. Water, fire, architecture, light: pick one and explore all its facets. Songs that switch metaphors (river → fire → clouds → earth) give listeners no visual anchor.
 
 This applies at album level too: each song gets its own motif for focus, variety comes from the collection, not from within a single track.
 
@@ -675,7 +675,7 @@ background noise floor consistent, imperfections kept"
 
 ### Eliminating the Generic Sawtooth Synth
 
-Suno defaults to sawtooth synths constantly. You can't just say "no saws" — give it something else to latch onto.
+Suno defaults to sawtooth synths constantly. You can't just say "no saws," so give it something else to latch onto.
 
 **Replace with specific synthesis types:**
 ```
@@ -711,7 +711,7 @@ rounded harmonic profile, controlled high end, phase-coherent low end, clean pun
 
 ### Electronic Production Stack
 
-For electronic, hip-hop, trap — shift away from realism language entirely:
+For electronic, hip-hop, and trap, shift away from realism language entirely:
 
 ```
 genre: "Synthwave EDM, driving bassline, intense energy"
@@ -754,25 +754,25 @@ punchy compression, polished professional sound"
 
 **When to use high Style Influence:** Vague tags (pop, rock) benefit from 70–90% to compensate for ambiguity.
 
-**When to use moderate Style Influence:** Specific tags (Progressive Djent Metal, 7/8 time) work better at 40–60% — specificity already constrains output.
+**When to use moderate Style Influence:** Specific tags (Progressive Djent Metal, 7/8 time) work better at 40–60%, specificity already constrains output.
 
 ### Exclude Styles
 
-Two distinct mechanisms — don't confuse them:
+Two distinct mechanisms. Don't confuse them:
 
 **1. The Exclude field (recommended, more reliable)**
-In Custom Mode → Advanced Options there's a dedicated Exclude input. Type instruments, styles, or vocal types you don't want there. Suno renders excluded items with a leading `-` in the song's sidebar. This is a first-class feature — more reliable than any inline negation.
+In Custom Mode → Advanced Options there's a dedicated Exclude input. Type instruments, styles, or vocal types you don't want there. Suno renders excluded items with a leading `-` in the song's sidebar. This is a first-class feature, more reliable than any inline negation.
 
 **2. Inline negation in the Style field (unofficial fallback)**
-You can add `no [element]` inline in the style field — e.g. `Indie folk, acoustic guitar, 95 BPM, no drums, no autotune`. Caveats from community testing:
+You can add `no [element]` inline in the style field, e.g. `Indie folk, acoustic guitar, 95 BPM, no drums, no autotune`. Caveats from community testing:
 - **Use `no X`, not `don't add X`.** Suno doesn't reliably parse "don't."
 - **Place exclusions at the end of the style prompt.** Positives are processed first; exclusions are applied after.
-- **The `-X` minus-sign form** (e.g. `-scraping sounds`) is how Suno *displays* exclusions in the UI — its behavior as *input* in the style field is undocumented. The verified inline form is `no X`.
+- **The `-X` minus-sign form** (e.g. `-scraping sounds`) is how Suno *displays* exclusions in the UI, its behavior as *input* in the style field is undocumented. The verified inline form is `no X`.
 - **Less reliable than the Exclude field.** Use inline when you're already at the prompting stage and don't want to switch contexts, or when an exclusion targets a specific descriptor that the Exclude field doesn't accept cleanly.
 
-**Combined approach** (used in this guide's [Getting Guitar + Voice Only](#getting-guitar--voice-only-no-drums-no-bass) example): put `no drums, no percussion` inline *and* `drums, percussion` in the Exclude field. Belt and braces — the most reliable way to eliminate something stubborn.
+**Combined approach** (used in this guide's [Getting Guitar + Voice Only](#getting-guitar--voice-only-no-drums-no-bass) example): put `no drums, no percussion` inline *and* `drums, percussion` in the Exclude field. Belt and braces, the most reliable way to eliminate something stubborn.
 
-**Don't over-exclude.** Keep total exclusions to ~2–3 maximum. Too many makes the arrangement unstable — Suno needs *something* to build with.
+**Don't over-exclude.** Keep total exclusions to ~2–3 maximum. Too many makes the arrangement unstable. Suno needs *something* to build with.
 
 **Common exclusion targets:**
 
@@ -786,7 +786,7 @@ You can add `no [element]` inline in the style field — e.g. `Indie folk, acous
 
 ### Killing Intro Hums & Vocalized Intros
 
-V5's most-reported annoyance: songs that open with a wordless hum, an "ooh/ahh" vocalise, or a spoken/ambient intro before the actual lyrics start (this is the "insists on weird intro vocals" behavior flagged in [Section 2](#2-model-selection)). The fix is a dense **negative-style** list aimed specifically at intro vocalizations — stack these in the Exclude Styles box:
+V5's most-reported annoyance: songs that open with a wordless hum, an "ooh/ahh" vocalise, or a spoken/ambient intro before the actual lyrics start (this is the "insists on weird intro vocals" behavior flagged in [Section 2](#2-model-selection)). The fix is a dense **negative-style** list aimed specifically at intro vocalizations, stack these in the Exclude Styles box:
 
 ```
 humming, hums, mmm vocals, ooh vocals, ahh vocals, la la vocals, wordless vocals,
@@ -828,17 +828,17 @@ Combine with `[START_ON: TRUE]` and `[START_ON: "first words of your lyrics"]` (
 The most important workflow improvement for quality output:
 
 1. **Generate** intro only (15–20 seconds)
-2. **Listen** — approve or discard before proceeding
+2. **Listen:** approve or discard before proceeding
 3. **Extend** into Verse 1, explicitly directing that section
 4. Continue: Pre-Chorus → Chorus → Verse 2 → Bridge → Final Chorus → Outro
 
-Each extend reads from existing audio context — you're continuing something already approved, not prompting blind.
+Each extend reads from existing audio context, you're continuing something already approved, not prompting blind.
 
 **Extend timing:** Extend from points of **building momentum**, not after natural endings. Mid-verse produces better continuations than post-chorus.
 
 ### Assemble From Parts (Studio Workflow)
 
-A different philosophy than the Extend method. Instead of building one continuous track by extending forward, you generate 4–6 parallel candidates and **stitch the best sections of each together in Suno Studio (or any DAW)**. Best for full-length tracks with instrumental breaks, solos, and dynamic arrangement — things Suno rarely produces in a single pass.
+A different philosophy than the Extend method. Instead of building one continuous track by extending forward, you generate 4–6 parallel candidates and **stitch the best sections of each together in Suno Studio (or any DAW)**. Best for full-length tracks with instrumental breaks, solos, and dynamic arrangement, things Suno rarely produces in a single pass.
 
 **The core constraint that makes this work:**
 
@@ -849,13 +849,13 @@ Put them at the very start of the style field, e.g. `108 BPM, key of G minor, ..
 **Why this works:**
 - Suno's first 30–60 seconds adhere most tightly to your prompt; later sections drift (see Section 1). Treating each generation as a *source of one good section* is more efficient than hoping any single generation is good end-to-end.
 - Long instrumental breaks, solos, and extended bridges almost never appear in a one-pass generation. You build them later.
-- Mashups and short-lyric tracks won't exceed the length of their lyrics — Suno doesn't reliably invent instrumental filler to stretch runtime. `[Instrumental]` tags may add a measure or two but won't carry a real solo section.
+- Mashups and short-lyric tracks won't exceed the length of their lyrics, Suno doesn't reliably invent instrumental filler to stretch runtime. `[Instrumental]` tags may add a measure or two but won't carry a real solo section.
 
 **The workflow:**
 
 1. **Seed with a strong lyrical hook.** Idioms and common phrases ("come as you are," "wildest dreams") anchor the generation; awkward AI lyrics can be fixed later.
 2. **Lock BPM + key in the style field.** Same values in every generation for this project.
-3. **Generate 4–6 candidates.** You're not hunting for *the* song — you're collecting verses, choruses, bridges, intros, and outros.
+3. **Generate 4–6 candidates.** You're not hunting for *the* song, you're collecting verses, choruses, bridges, intros, and outros.
 4. **Assemble in Suno Studio (or your DAW).** Drag in the candidates, cut on the downbeat, swap sections freely: Verse from Gen 1, Chorus from Gen 2, Bridge from Gen 4.
 5. **Generate a dedicated instrumental track for breaks.** Take your best generation, split stems (Suno's built-in splitter is ~10 credits and integrates with Studio), download the instrumental, run it through **Create → Remix → Cover** with prompts like *"fully expressive instrumental arrangement, active fills, evolving textures, build into a lead solo, never static."* Extract the solos, breakdowns, and reprises from the result and drop them into the arrangement.
 6. **Export.**
@@ -864,13 +864,13 @@ Put them at the very start of the style field, e.g. `108 BPM, key of G minor, ..
 
 | Method | When to use | Settings |
 |--------|-------------|----------|
-| **Replace** (click section, edit lyrics, open Advanced) | Changing a few words, keeping the music | Weirdness 20–30, Style Influence 60–70, Audio Influence 70–80. Set Replace to **Song**, not Vocals Only — keeps instruments synced to new phrasing. |
+| **Replace** (click section, edit lyrics, open Advanced) | Changing a few words, keeping the music | Weirdness 20–30, Style Influence 60–70, Audio Influence 70–80. Set Replace to **Song**, not Vocals Only, keeps instruments synced to new phrasing. |
 | **Sample** (Create → Sample → highlight stanza) | Replace gave weird results | Same influence settings as Replace |
 | **Cover** (best structure → Remix → Cover, paste new lyrics) | Rewriting the whole song over the same arrangement | Same influence settings |
 
 **When to use this vs. Extend:**
-- **Extend method** — you have a clear single-take vision and want continuity. Best for short-form, tight arrangements, tracks where vibe matters more than structural variety.
-- **Assemble method** — you want a full-length release with real dynamics, instrumental sections, and section-level variety. Best when you'd rather spend 1–2 hours in Studio than burn 30 generations chasing a one-shot win.
+- **Extend method:** you have a clear single-take vision and want continuity. Best for short-form, tight arrangements, tracks where vibe matters more than structural variety.
+- **Assemble method:** you want a full-length release with real dynamics, instrumental sections, and section-level variety. Best when you'd rather spend 1–2 hours in Studio than burn 30 generations chasing a one-shot win.
 
 ### Quality Over Volume
 
@@ -911,7 +911,7 @@ Set: Weirdness 0, Style Influence 100, Audio Influence 100. Avoid style descript
 
 Generate a specific section (e.g., a bridge that sounds like a different band) as its own standalone song. Extract that section. Insert into your main track. Run Cover with Weirdness 0, Style Influence 100, Audio Influence 100.
 
-**Warning:** Seams usually show — slight quality drop at the join. Use when nothing else achieves the contrast you need.
+**Warning:** Seams usually show, slight quality drop at the join. Use when nothing else achieves the contrast you need.
 
 ### Building Effective Personas
 
@@ -936,19 +936,19 @@ When batch generating, thumbnail visual appeal predicts audio quality more accur
 
 ### Simple Mode vs. Custom Mode
 
-**Simple Mode** — best for rapid exploration, rough ideas, or when you don't care about exact structure. One compact paragraph prompt, generate a few versions.
+**Simple Mode:** best for rapid exploration, rough ideas, or when you don't care about exact structure. One compact paragraph prompt, generate a few versions.
 
-**Custom Mode** — recommended whenever you care about sections, want a strong intentional hook, or need repeatable results you can iterate on. If your goal is "I want this to sound like the thing in my head," Custom Mode is the better default.
+**Custom Mode:** recommended whenever you care about sections, want a strong intentional hook, or need repeatable results you can iterate on. If your goal is "I want this to sound like the thing in my head," Custom Mode is the better default.
 
 ### The 5 Questions Before Writing Any Prompt
 
 Answer these before touching the style field. If you can answer all five, you can write a good prompt almost every time:
 
-1. **Instrumental or vocal?** — changes everything downstream
-2. **Vibe in 3–5 adjectives** — uplifting, tense, nostalgic, dreamy, aggressive
-3. **Primary genre + optional secondary flavor** — "synthwave with a little modern pop edge"
-4. **Tempo and groove** — BPM or slow/mid/fast, plus feel ("four-on-the-floor," "half-time," "swing")
-5. **What carries the hook?** — lead synth? guitar riff? piano motif? big vocal chorus?
+1. **Instrumental or vocal?** changes everything downstream
+2. **Vibe in 3–5 adjectives:** uplifting, tense, nostalgic, dreamy, aggressive
+3. **Primary genre + optional secondary flavor:** "synthwave with a little modern pop edge"
+4. **Tempo and groove:** BPM or slow/mid/fast, plus feel ("four-on-the-floor," "half-time," "swing")
+5. **What carries the hook?** lead synth? guitar riff? piano motif? big vocal chorus?
 
 ### Getting Guitar + Voice Only (No Drums, No Bass)
 
@@ -980,7 +980,7 @@ Lyrics / Structure:
 
 For tracks that need genuinely different vibes per section (e.g., dark rap verses + bright pop chorus):
 
-**One-shot attempt:** Use language that signals duality without blending — "schizophrenic pop," "dynamic mood shifts," "aggressive dark electronic verses, bright upbeat piano rock chorus." Add `[Stop]` or `[Break]` before the chorus to force a reset.
+**One-shot attempt:** Use language that signals duality without blending, "schizophrenic pop," "dynamic mood shifts," "aggressive dark electronic verses, bright upbeat piano rock chorus." Add `[Stop]` or `[Break]` before the chorus to force a reset.
 
 **Splicing workflow (more reliable):**
 1. Generate the verse separately with dark style prompt
@@ -996,7 +996,7 @@ A key finding from metal/extreme genre users: **vocal type tags work significant
 
 ```
 ✅ Style field: "female screaming vocals, guttural growl, raspy delivery"
-❌ Lyrics box: [screaming vocals] — often ignored
+❌ Lyrics box: [screaming vocals], often ignored
 ```
 
 For extreme genres, describe the sound paragraph-style rather than stacking genre tags:
@@ -1016,9 +1016,9 @@ From the Suno team directly:
 
 **Starting out with v5:**
 - Begin with 1–2 genre tags in Style of Music; keep lyric structures simple
-- Layer in complexity one or two tags at a time — don't port over v4.5 prompts wholesale
+- Layer in complexity one or two tags at a time, don't port over v4.5 prompts wholesale
 - Use Exclude tags to push away unwanted elements
-- Prompts that worked in earlier models **may not translate** — treat v5 as fresh territory
+- Prompts that worked in earlier models **may not translate**. Treat v5 as fresh territory
 
 **Sliders:**
 - Tweak one slider at a time; don't jump above 50% immediately
@@ -1027,44 +1027,44 @@ From the Suno team directly:
 
 **Song length:**
 - Shorter lyrical inputs cause shorter generations
-- Cover, Inspo, and Persona features naturally reduce generated length — this is by design, not a bug
+- Cover, Inspo, and Persona features naturally reduce generated length, this is by design, not a bug
 - Extend is the correct tool for building out length
 
 **Inspo feature:**
 - Works best with 1–4 reference songs
-- Be selective with playlists — too many songs dilutes the reference
-- Drag and drop directly from your workspace into the Create panel: two options appear — *Drop here to Remix* or *Drop here to use as Inspiration*
+- Be selective with playlists, too many songs dilutes the reference
+- Drag and drop directly from your workspace into the Create panel: two options appear, *Drop here to Remix* or *Drop here to use as Inspiration*
 
 ### v5.5: Voices, Custom Models, My Taste
 
-v5.5 (released March 26, 2026) is primarily a **personalization** release rather than a new prompt engine. Suno describes the model itself as "more expressive" and more responsive to prompt quality — meaning prompt discipline matters more, not less. No documented changes to style-field tag budget or meta-tag behavior; assume parity with v5 until field-tested otherwise.
+v5.5 (released March 26, 2026) is primarily a **personalization** release rather than a new prompt engine. Suno describes the model itself as "more expressive" and more responsive to prompt quality, meaning prompt discipline matters more, not less. No documented changes to style-field tag budget or meta-tag behavior; assume parity with v5 until field-tested otherwise.
 
-**Voices (paid tiers)** — evolution of Personas. Capture your own singing voice and use it as the vocal in any generation. Solves the "same singer across multiple tracks" problem Personas only half-solved.
+**Voices (paid tiers):** evolution of Personas. Capture your own singing voice and use it as the vocal in any generation. Solves the "same singer across multiple tracks" problem Personas only half-solved.
 
-- **Upload spec (from Suno docs):** 15 seconds to 4 minutes of audio; Suno keeps the best 2 minutes. Acapella produces the cleanest results, but tracks with backing music are accepted — Suno runs stem extraction automatically.
+- **Upload spec (from Suno docs):** 15 seconds to 4 minutes of audio; Suno keeps the best 2 minutes. Acapella produces the cleanest results, but tracks with backing music are accepted, Suno runs stem extraction automatically.
 - **Verification step:** Suno displays a short phrase for you to read aloud. The spoken recording is matched against the singing recording to confirm same person, and against the displayed text to confirm you said the right words. You then check a rights-confirmation box before saving.
 - **Tier gating:** Suno's announcement and community sources put Voices on paid tiers; the help center doesn't enumerate plans explicitly. Confirm in your account before counting on it.
 - **Style-bleed gotcha:** A Voice created from a *stylistically distinctive* source track will inject that style back into subsequent generations at **Audio Influence above ~20%**, usually around the midpoint or verse 2, in roughly 80% of attempts (community-reported, Cenn73 on r/SunoAI). If you want the Voice's *timbre* without its *style*, train Voices on cleaner / less style-heavy source recordings, and keep Audio Influence low when generating in a non-matching genre.
 
-**Custom Models (Pro/Premier)** — upload your own finished tracks to fine-tune a personal v5.5 variant.
+**Custom Models (Pro/Premier):** upload your own finished tracks to fine-tune a personal v5.5 variant.
 
 - **Minimum:** as few as 6 tracks. **Maximum:** 3 custom models per account.
 - **Training time:** ~2–5 minutes per model.
 - **Ownership:** you must own the rights to every track you upload.
 - **Sharing:** Custom Models are private and cannot be shared between users.
 - **Bulk Upload** is supported for batches.
-- **Community guidance** (not from official docs): keep training tracks **stylistically consistent** — feeding the model a random genre mix produces a model that learned nothing in particular.
+- **Community guidance** (not from official docs): keep training tracks **stylistically consistent**. Feeding the model a random genre mix produces a model that learned nothing in particular.
 
-**My Taste (all users)** — adapts to your generation and listening patterns over time, biasing future outputs toward your preferred genres and moods. Also powers the **Style Augmentation** magic-wand button on the style field, which expands a short prompt using your taste profile.
+**My Taste (all users):** adapts to your generation and listening patterns over time, biasing future outputs toward your preferred genres and moods. Also powers the **Style Augmentation** magic-wand button on the style field, which expands a short prompt using your taste profile.
 
 **Practical implications:**
 - If you've been using a hand-built Persona for vocal consistency on owned-vocal projects, **a Voice will probably replace it**.
-- Custom Models reduce how much per-prompt detail you need to reach an "on-brand" sound — but only after they've been trained on consistent material.
+- Custom Models reduce how much per-prompt detail you need to reach an "on-brand" sound, but only after they've been trained on consistent material.
 - My Taste is silent influence: if your outputs start drifting toward something you don't want, check whether My Taste has been learning from generations you didn't actually like.
 
 ### MILO-1080 (Adjacent Release)
 
-Launched alongside the v5.5 cycle (March 2026, currently in Suno's Labs area): **MILO-1080** — a 16-track step sequencer and synth designer with MIDI support. Tracks can be populated with prompted sample generations, clips from your Suno library, or sounds designed in MILO's synth engine. This is a production tool for people who know what a step sequencer is, not a generative shortcut. Out of scope for this guide, but worth knowing it exists if you're moving from Suno generations into a more hands-on production workflow.
+Launched alongside the v5.5 cycle (March 2026, currently in Suno's Labs area): **MILO-1080:** a 16-track step sequencer and synth designer with MIDI support. Tracks can be populated with prompted sample generations, clips from your Suno library, or sounds designed in MILO's synth engine. This is a production tool for people who know what a step sequencer is, not a generative shortcut. Out of scope for this guide, but worth knowing it exists if you're moving from Suno generations into a more hands-on production workflow.
 
 ### Hybrid Model Workflow: Generate on v4.5/v5, Cover on v5.5
 
@@ -1085,7 +1085,7 @@ Two specific community fixes for known v5.5 quirks (Cenn73 on r/SunoAI):
 
 Also tried: `[Urgent Intro]` (community-suggested, less verified).
 
-**Killing the stripped-down verse-ending drift:** Once your lyrics are rhythmically and lyrically locked, **remove all `[Verse]` and `[Chorus]` tags**. Keep `[Bridge]`, `[Drop]`, and `[Hook]` only. **Remove every empty line** — Suno reads blank lines as a pause or instrumental break and will hollow out the section. Crush stanzas together.
+**Killing the stripped-down verse-ending drift:** Once your lyrics are rhythmically and lyrically locked, **remove all `[Verse]` and `[Chorus]` tags**. Keep `[Bridge]`, `[Drop]`, and `[Hook]` only. **Remove every empty line:** Suno reads blank lines as a pause or instrumental break and will hollow out the section. Crush stanzas together.
 
 Fragile (Suno is fickle) but reproducible enough to be worth trying before burning more credits on the same prompt.
 
@@ -1093,11 +1093,11 @@ Fragile (Suno is fickle) but reproducible enough to be worth trying before burni
 
 A song generated with a persona doesn't let you directly create another persona from it. Workaround: **remaster the song first**, then create a persona from the remaster.
 
-Additional method: Crop the song and select the entire crop to create a persona — holds the same vocal style intact.
+Additional method: Crop the song and select the entire crop to create a persona, holds the same vocal style intact.
 
 ### Complete Dark Trap Template
 
-A worked example for minimal cinematic trap (Carti/Ken Carson adjacent) — the key is keeping the global style and lyric structure separate and specific:
+A worked example for minimal cinematic trap (Carti/Ken Carson adjacent), the key is keeping the global style and lyric structure separate and specific:
 
 **Global Style:**
 ```
@@ -1139,7 +1139,7 @@ Dense But Controlled Output, Gentle Peak Control.
 [no chiptune | fade or clean stop]
 ```
 
-This pattern — alternating presence of two elements (analog arp and chiptune) so they never overlap — is a reusable template for any two-element instrumentation contrast.
+This pattern, alternating presence of two elements (analog arp and chiptune) so they never overlap, is a reusable template for any two-element instrumentation contrast.
 
 ### Post-Processing & Remastering
 
@@ -1149,7 +1149,7 @@ Suno outputs almost always benefit from some post-processing before release. The
 
 #### The Fundamental Constraint
 
-Suno audio is **already heavily compressed** and mixed internally. This is not a blank slate — it is a finished mix that happens to need polish. The most common beginner mistake is treating it like raw stems and stacking more compression on top, which crushes transients, removes dynamics, and makes everything sound worse.
+Suno audio is **already heavily compressed** and mixed internally. This is not a blank slate. It is a finished mix that happens to need polish. The most common beginner mistake is treating it like raw stems and stacking more compression on top, which crushes transients, removes dynamics, and makes everything sound worse.
 
 **The correct mindset:** You are mastering a finished mix, not producing one from scratch. Small adjustments. Surgical EQ. A light limiter to hit platform targets. That is usually all a good Suno track needs.
 
@@ -1159,9 +1159,9 @@ Suno audio is **already heavily compressed** and mixed internally. This is not a
 
 **Problem: Too much headroom / output is quiet**
 
-Suno WAV downloads are intentionally conservative — the peak level sits well below 0dBFS. This is not a defect; it is intentional headroom for you to master up.
+Suno WAV downloads are intentionally conservative. The peak level sits well below 0dBFS. This is not a defect; it is intentional headroom for you to master up.
 
-Fix: Use a limiter (not a compressor) to bring the output to -1dBFS true peak. Then target -14 LUFS for Spotify/streaming. Spotify normalizes to -14 LUFS anyway — going louder does not help and costs you dynamics.
+Fix: Use a limiter (not a compressor) to bring the output to -1dBFS true peak. Then target -14 LUFS for Spotify/streaming. Spotify normalizes to -14 LUFS anyway. Going louder does not help and costs you dynamics.
 
 Tools: Any DAW limiter, iZotope Ozone (Maximizer module), FabFilter Pro-L, Newfangled Elevate, or any AI mastering service.
 
@@ -1171,7 +1171,7 @@ Tools: Any DAW limiter, iZotope Ozone (Maximizer module), FabFilter Pro-L, Newfa
 
 This is the most common tonal problem in Suno output. The 200–500Hz range tends to accumulate energy, especially in dense arrangements with multiple instruments.
 
-Fix: A surgical EQ cut in the 200–350Hz range — typically 2–4dB with a moderate Q. Listen while cutting and find where the "boxiness" lives for your specific track. Do not apply a blanket cut; find the frequency first.
+Fix: A surgical EQ cut in the 200–350Hz range, typically 2–4dB with a moderate Q. Listen while cutting and find where the "boxiness" lives for your specific track. Do not apply a blanket cut; find the frequency first.
 
 Tools: FabFilter Pro-Q 3, Reaper's ReaEQ, Audacity's built-in EQ (less precise but functional for simple cuts).
 
@@ -1181,7 +1181,7 @@ Tools: FabFilter Pro-Q 3, Reaper's ReaEQ, Audacity's built-in EQ (less precise b
 
 V5 in particular can produce slightly harsh sibilance or bright harshness in the 5–10kHz range, especially on vocals.
 
-Fix: A gentle shelf cut above 8kHz (1–2dB) or a dynamic EQ / de-esser targeting the specific harsh frequency. Avoid broad cuts — they kill the air and make the track sound dull.
+Fix: A gentle shelf cut above 8kHz (1–2dB) or a dynamic EQ / de-esser targeting the specific harsh frequency. Avoid broad cuts, they kill the air and make the track sound dull.
 
 Tools: FabFilter Pro-DS (de-esser), Soothe 2 (dynamic resonance suppression), or a simple EQ shelf.
 
@@ -1199,9 +1199,9 @@ Tools: Any DAW with automation. In Audacity: Effect → Fade Out on the last 1�
 
 **Problem: Track is too saturated / distorted (especially V4/V4.5)**
 
-Earlier models over-saturate. This is baked into the audio — you cannot fully remove it. What you can do is reduce the perceived harshness.
+Earlier models over-saturate. This is baked into the audio. You cannot fully remove it. What you can do is reduce the perceived harshness.
 
-Fix: A gentle mid-side EQ to reduce saturation in the sides (where it is often most aggressive), or a multiband approach that gently tames the 2–5kHz range where saturation artifacts tend to be most audible. Do not try to "clean up" all saturation — some is character. Identify what is bothering you specifically and target that.
+Fix: A gentle mid-side EQ to reduce saturation in the sides (where it is often most aggressive), or a multiband approach that gently tames the 2–5kHz range where saturation artifacts tend to be most audible. Do not try to "clean up" all saturation, some is character. Identify what is bothering you specifically and target that.
 
 Tools: bx_digital V3 (M/S EQ), FabFilter Pro-Q 3 in M/S mode, iZotope Ozone's Spectral Shaper.
 
@@ -1209,7 +1209,7 @@ Tools: bx_digital V3 (M/S EQ), FabFilter Pro-Q 3 in M/S mode, iZotope Ozone's Sp
 
 **Problem: Specific artifact frequencies / hiss on stems**
 
-Suno stems (downloaded from the Song Editor) carry noise and artifacts, particularly on synth and SFX tracks. The WAV files themselves have a hard frequency cutoff around 17kHz despite being labeled as WAV — they are essentially MP3 quality with WAV packaging.
+Suno stems (downloaded from the Song Editor) carry noise and artifacts, particularly on synth and SFX tracks. The WAV files themselves have a hard frequency cutoff around 17kHz despite being labeled as WAV. They are essentially MP3 quality with WAV packaging.
 
 Fix: Lowpass filter at 18–20kHz to remove the artifact shelf. For hiss specifically, use spectral repair or noise reduction on the offending stem before incorporating it into your mix.
 
@@ -1221,7 +1221,7 @@ Tools: UVR5 (free, open source) with GPU processing produces significantly clean
 
 Suno's internal compression rounds off transients, particularly on drums.
 
-Fix: A **transient shaper** can restore attack without adding more compression. Increase attack shape on kick and snare. Subtle — do not overdo it.
+Fix: A **transient shaper** can restore attack without adding more compression. Increase attack shape on kick and snare. Subtle. Do not overdo it.
 
 Tools: Transient Designer Plus (Waves), SPL Transient Designer, or the free FLUX:: Bitter available through various freeware collections.
 
@@ -1267,7 +1267,7 @@ Mastering: Clean, modern, professional sound.
 
 Settings: Weirdness 0, Style Influence 100, Audio Influence 100.
 
-**Critical:** Avoid style or mood descriptors — they cause the cover to drift from the original's character. The goal here is quality improvement, not reinterpretation. Covers preserve structure and genre when the style field is kept minimal.
+**Critical:** Avoid style or mood descriptors, they cause the cover to drift from the original's character. The goal here is quality improvement, not reinterpretation. Covers preserve structure and genre when the style field is kept minimal.
 
 ---
 
@@ -1281,7 +1281,7 @@ Settings: Weirdness 0, Style Influence 100, Audio Influence 100.
 | Tidal | -14 LUFS | -1 dBFS |
 | SoundCloud | -14 LUFS | -1 dBFS |
 
-Spotify normalizes louder tracks down to -14 LUFS on playback. Mastering louder than -14 LUFS does not make your track louder on Spotify — it just reduces your dynamic range unnecessarily.
+Spotify normalizes louder tracks down to -14 LUFS on playback. Mastering louder than -14 LUFS does not make your track louder on Spotify. It just reduces your dynamic range unnecessarily.
 
 ---
 
@@ -1307,9 +1307,9 @@ If you want to remix, replace, or individually process parts of a Suno track:
 | DAW (one-time) | Full control | Reaper ($60), Audacity (free but limited) |
 | DAW + plugins | Professional results | Reaper + FabFilter bundle, iZotope Ozone |
 
-**On Audacity vs. Reaper:** Audacity applies effects destructively — baked into the waveform, hard to undo. Reaper is non-destructive, has automation, supports VST plugins without crashes, and costs $60 (free to evaluate indefinitely). If you are going to spend any time in a DAW, Reaper is the clear choice.
+**On Audacity vs. Reaper:** Audacity applies effects destructively, baked into the waveform, hard to undo. Reaper is non-destructive, has automation, supports VST plugins without crashes, and costs $60 (free to evaluate indefinitely). If you are going to spend any time in a DAW, Reaper is the clear choice.
 
-**Using AI to guide DAW work:** Gemini and ChatGPT can guide you through plugin settings step-by-step if you upload screenshots of your mixer and describe what you want. This is a legitimate and effective learning path — provide the AI with your plugin list and tell it specifically what is wrong with the track.
+**Using AI to guide DAW work:** Gemini and ChatGPT can guide you through plugin settings step-by-step if you upload screenshots of your mixer and describe what you want. This is a legitimate and effective learning path. Provide the AI with your plugin list and tell it specifically what is wrong with the track.
 
 ---
 
@@ -1321,7 +1321,7 @@ These techniques operate at the typography and syntax level inside the lyrics fi
 
 ### Trick #4 — Live Concert Mode *(Reliability: High)*
 
-**What it does:** Environmental cues inside lyrics bias Suno toward live recordings, audience noise, imperfect timing, and raw vocal delivery. You are not "adding sound effects" — you are changing the performance context.
+**What it does:** Environmental cues inside lyrics bias Suno toward live recordings, audience noise, imperfect timing, and raw vocal delivery. You are not "adding sound effects", you are changing the performance context.
 
 **Syntax:**
 
@@ -1360,8 +1360,8 @@ Asterisks tell Suno: "this is not to be sung."
 **When it fails:** Polished genres (clean pop, EDM), combined with "clean/studio/pristine" keywords, or too many cues stacked. Result: half-studio, half-live confusion.
 
 **Rules:**
-- Less is more — one or two live cues are enough
-- Match genre — works best with rock, folk, singer-songwriter
+- Less is more, one or two live cues are enough
+- Match genre, works best with rock, folk, singer-songwriter
 - Place cues at structural moments: intro, between sections, outro
 - Think "atmosphere," not "specific sound effect"
 
@@ -1415,10 +1415,10 @@ I'm out of /brɛθ/ again     ← forces "breth" not "breathe"
 - `faux king` → blends at 150+ BPM with fast/punk delivery
 
 **Genre effectiveness:**
-- Hip-hop/rap: fast delivery blurs pronunciation — works very well
-- Punk/rock: shouted vocals mask exact pronunciation — very effective
-- Metal: growled/screamed vocals make pronunciation ambiguous — reliable
-- Pop/ballad: clear enunciation makes this difficult — least reliable
+- Hip-hop/rap: fast delivery blurs pronunciation, works very well
+- Punk/rock: shouted vocals mask exact pronunciation, very effective
+- Metal: growled/screamed vocals make pronunciation ambiguous, reliable
+- Pop/ballad: clear enunciation makes this difficult, least reliable
 
 **Failure modes:** Phonetic distance too large, syllable count mismatch, filter updates. Expect 70–80% success rate with well-chosen homophones.
 
@@ -1431,7 +1431,7 @@ I'm out of /brɛθ/ again     ← forces "breth" not "breathe"
 
 ### Trick #7 — Rap Cadence Control: Hyphen-Runs + Breath Punctuation *(Reliability: Medium)*
 
-**What it does:** Controls delivery inside a given tempo by manipulating word boundaries and micro-pauses. This is not BPM control — it's delivery control.
+**What it does:** Controls delivery inside a given tempo by manipulating word boundaries and micro-pauses. This is not BPM control, it's delivery control.
 
 **Two levers:**
 - **Hyphen-runs** → fewer natural gaps → faster/tighter flow
@@ -1465,7 +1465,7 @@ Make 2–3 generations before changing the template. Change **one lever at a tim
 
 ### Trick #8 — ALL CAPS for Emotional Spikes *(Reliability: Very High)*
 
-**What it does:** Capital letters signal emphasis, urgency, and intensity. Suno interprets ALL CAPS as "increase vocal energy" — affects loudness, aggressiveness, phrasing, and articulation.
+**What it does:** Capital letters signal emphasis, urgency, and intensity. Suno interprets ALL CAPS as "increase vocal energy", affects loudness, aggressiveness, phrasing, and articulation.
 
 **Why it works:** Training data strongly associates ALL CAPS and exclamation points with emotional outbursts. Extremely stable across models.
 
@@ -1523,7 +1523,7 @@ G-O-O-D-B-Y-E means the end
 ```
 Each letter = separate note. Best for: pop hooks, jingles.
 
-**Rules:** Use sparingly on key words only. Match tempo — stretching works better slow. Trap loves stuttering; folk doesn't.
+**Rules:** Use sparingly on key words only. Match tempo, stretching works better slow. Trap loves stuttering; folk doesn't.
 
 **Failure modes:** Overuse throughout entire song, fast tempos, dense lyrics, or genre that doesn't support extended vocals → garbled or ignored.
 
@@ -1555,7 +1555,7 @@ I'm breaking free (breaking free) (ooh) (yeah yeah)
 ```
 Each parenthesis = separate vocal layer. More = more backing vocal density.
 
-**Rules:** Use consistently to establish the pattern early. Vary content — mix echoes, adlibs, harmonies. Max 1–2 parentheses per line. Match genre conventions: hip-hop = adlibs, soul = harmonies.
+**Rules:** Use consistently to establish the pattern early. Vary content, mix echoes, adlibs, harmonies. Max 1–2 parentheses per line. Match genre conventions: hip-hop = adlibs, soul = harmonies.
 
 **Failure modes:** Collapses to unison at extremely fast tempos, overly dense lyrics, or too many parentheses per line.
 
@@ -1575,7 +1575,7 @@ Each parenthesis = separate vocal layer. More = more backing vocal density.
 ```
 [Chorus | Anthemic | Stacked Harmonies | Brass Section | Bass Drop | Wide Stereo | Heavy Compression]
 ```
-Each element is processed as a discrete instruction. Priority flows left to right — most important first.
+Each element is processed as a discrete instruction. Priority flows left to right, most important first.
 
 **Optimal element order:**
 ```
@@ -1611,9 +1611,9 @@ NOTHING CAN STOP ME TODAY!
 ```
 
 **Rules:**
-- **Max 7 elements per tag** — beyond that, confusion increases
-- **Priority order matters** — most important element goes first
-- **Be specific** — "Guitar Solo" not just "Guitar"
+- **Max 7 elements per tag:** beyond that, confusion increases
+- **Priority order matters:** most important element goes first
+- **Be specific:** "Guitar Solo" not just "Guitar"
 - **Tags should reinforce the style prompt**, not contradict it
 
 **Failure modes:** More than 7 elements, contradictory elements in the same tag (e.g., `Intimate | Explosive`), or used without clear section structure.
@@ -1656,7 +1656,7 @@ Living my life [let's go!] no regrets [ayy!]
 
 **What it does NOT do:** Turn the track into a show tune. It is strictly a clarity multiplier for the vocals.
 
-**Why it works:** "Broadway" in training data is strongly associated with dialogue-like intelligibility and vocal projection — even during high-emotion moments. The model stops "smearing" and starts treating lyrics like actual sentences that happen to be sung.
+**Why it works:** "Broadway" in training data is strongly associated with dialogue-like intelligibility and vocal projection, even during high-emotion moments. The model stops "smearing" and starts treating lyrics like actual sentences that happen to be sung.
 
 **Usage:**
 ```
@@ -1735,7 +1735,7 @@ glowing font at bottom
 2. Main style/genre next (context first)
 3. Main subject and scene construction
 4. Colors, emotions, details, text last
-5. **Less text is better** — one or two words maximum
+5. **Less text is better:** one or two words maximum
 6. Generate 4–5 variations per song; mix detailed and minimal
 
 ---
@@ -1828,7 +1828,7 @@ endless, eternal, hollow, broken, shattered, fading, crimson, golden, empty, fro
 
 - Use hyphens `(-)` for lyrical breaks, not em dashes `(—)`
 - Correct: "I lose you - then find you again"
-- Avoid excessive ellipses `(...)` — one per song maximum
+- Avoid excessive ellipses `(...)`, one per song maximum
 - Let lines breathe; not every bar needs dense metaphor
 
 ### AI Lyric Generation Prompt Template
@@ -1850,7 +1850,7 @@ Write lyrics for a song with the following concept:
 1. Use concrete sensory imagery over abstract statements
 2. Prefer verbs of subtle motion (linger, drift, shift, slip, settle, press)
 3. Include at least one specific, unglamorous detail that feels lived-in
-4. Vary line lengths — not every line should be symmetrical
+4. Vary line lengths, not every line should be symmetrical
 5. Use hyphens (-) for breaks, not em dashes
 6. Subvert at least one expected rhyme or phrase
 
@@ -1870,7 +1870,7 @@ Write the complete lyrics with section markers. Make every line earn its place.
 - [ ] At least 1 specific, unglamorous detail
 - [ ] Hyphens used correctly (not em dashes)
 - [ ] Line lengths vary naturally
-- [ ] Emotional arc progresses — end differs from beginning
+- [ ] Emotional arc progresses, end differs from beginning
 - [ ] Could a human have written this? Does it feel lived-in?
 
 ---
@@ -1893,7 +1893,7 @@ This guide synthesizes material from the following sources. Each is worth readin
 **[2] Suno AI Song Syntax**
 - Author: daveshap (GitHub)
 - URL: https://github.com/daveshap/suno
-- Content: Comprehensive tag syntax reference — base tags, modifier behavior, period/exclamation rhythm system, vocal and instrument tags, style field construction, album art prompting. Primary source for Section 4 (structure/tags) and Section 10 (album art).
+- Content: Comprehensive tag syntax reference: base tags, modifier behavior, period/exclamation rhythm system, vocal and instrument tags, style field construction, album art prompting. Primary source for Section 4 (structure/tags) and Section 10 (album art).
 
 **[3] SunoAI Complete Meta Tags Guide**
 - Author: Shawn McAllister (@stonedoubt / entrepeneur4lyf)
@@ -1978,7 +1978,7 @@ All posts by u/Grenar, published on r/AiPizza. Primary source for Section 10.
 **[19] Tips & Tricks for Using the New Model (Official Suno Post)**
 - Author: u/Suno_helper (Suno team)
 - URL: https://www.reddit.com/r/SunoAI/comments/1nudoue/
-- Content: Official v5 guidance — slider usage, prompt complexity scaling, Inspo 1–4 songs, Drag & Drop Remix/Inspo, Cover/Persona length behavior. Source for "Official Suno v5 Guidance" in Section 9.
+- Content: Official v5 guidance: slider usage, prompt complexity scaling, Inspo 1–4 songs, Drag & Drop Remix/Inspo, Cover/Persona length behavior. Source for "Official Suno v5 Guidance" in Section 9.
 
 **[20] What Mastering Do You Perform on Finished Tracks?**
 - Author: u/Key-Call2867 (thread), multiple contributors
@@ -2003,12 +2003,12 @@ All posts by u/Grenar, published on r/AiPizza. Primary source for Section 10.
 **[24] My Complete Workflow for Writing Authentic Lyrics**
 - Author: u/doomsboygamingv2
 - URL: https://www.reddit.com/r/SunoAI/comments/1of8wt9/
-- Content: Supplement to Section 13 — AI cliché word list, specific time trap (3 AM, 2 AM), academic language red flags, multi-stage writing process. Partial overlap with existing Section 13.
+- Content: Supplement to Section 13: AI cliché word list, specific time trap (3 AM, 2 AM), academic language red flags, multi-stage writing process. Partial overlap with existing Section 13.
 
 **[25] Guide: Stop Brute-Forcing Suno Like a Slot Machine**
 - Author: u/budmaniak
 - URL: https://www.reddit.com/r/SunoAI/comments/1tooamm/
-- Content: Studio-centric assembly workflow — BPM/key locking, 4–6 generation rule, Replace/Sample/Cover lyric-fix methods with specific slider settings, stem-split + Cover-Remix for instrumental breaks. Source for "Assemble From Parts" in Section 9 and the prompt-adherence-decays note in Section 1.
+- Content: Studio-centric assembly workflow: BPM/key locking, 4–6 generation rule, Replace/Sample/Cover lyric-fix methods with specific slider settings, stem-split + Cover-Remix for instrumental breaks. Source for "Assemble From Parts" in Section 9 and the prompt-adherence-decays note in Section 1.
 
 **[26] Suno v5.5: More Expressive. More You. (Official Blog)**
 - Author: Suno team
@@ -2028,7 +2028,7 @@ All posts by u/Grenar, published on r/AiPizza. Primary source for Section 10.
 **[29] Custom Models in v5.5 (Help Center)**
 - Author: Suno team
 - URL: https://help.suno.com/en/articles/11362497
-- Content: Custom Models requirements — minimum 6 tracks, 3 models max, Pro/Premier tier, ~2–5 min training time, ownership requirement, bulk upload, no inter-user sharing.
+- Content: Custom Models requirements: minimum 6 tracks, 3 models max, Pro/Premier tier, ~2–5 min training time, ownership requirement, bulk upload, no inter-user sharing.
 
 **[30] MILO-1080 Coverage**
 - Sources: Music Ally (https://musically.com/2026/03/24/sunos-latest-move-is-milo-1080-an-ai-driven-step-sequencer/), MusicRadar, RouteNote
@@ -2052,24 +2052,24 @@ All posts by u/Grenar, published on r/AiPizza. Primary source for Section 10.
 **[34] r/SunoAI — "Your Suno song has a structure problem — here's the 3-part fix"**
 - Author: u/sunoarchitect
 - URL: https://www.reddit.com/r/SunoAI/comments/1u7asio/
-- Content: Promotional post for a free structure-checking tool (sunoarchitect.com). Treated skeptically — its syllable-consistency and genre-order points duplicate Sections 6 and 5, and the comment thread flags it as AI-generated marketing. Only the honest `[End]` reliability caveat (surfaced by the author in replies) and the unverified tag-placement claim were kept. Source for "Closing the Structure" in Section 4.
+- Content: Promotional post for a free structure-checking tool (sunoarchitect.com). Treated skeptically, its syllable-consistency and genre-order points duplicate Sections 6 and 5, and the comment thread flags it as AI-generated marketing. Only the honest `[End]` reliability caveat (surfaced by the author in replies) and the unverified tag-placement claim were kept. Source for "Closing the Structure" in Section 4.
 
 ---
 
 ## 15. Contributing
 
-This guide is a living document. If you have a technique, prompt pattern, or finding that isn't covered here — or if something is wrong or outdated — contributions are welcome.
+This guide is a living document. If you have a technique, prompt pattern, or finding that isn't covered here, or if something is wrong or outdated, contributions are welcome.
 
 **To contribute:**
 - Open a PR with your addition or correction
 - Include a brief note on what you tested, how many generations, and which model version
 - Link the source if the technique comes from a community post or external guide
-- Keep the voice consistent — practical and direct, no fluff
+- Keep the voice consistent, practical and direct, no fluff
 
 **What makes a good addition:**
-- Field-tested, not theoretical — describe what actually happened
-- Specific enough to reproduce — vague tips like "be more creative" don't help
-- Placed in the right section — or propose a new one if nothing fits
+- Field-tested, not theoretical, describe what actually happened
+- Specific enough to reproduce, vague tips like "be more creative" don't help
+- Placed in the right section, or propose a new one if nothing fits
 
 **What to flag as an issue rather than a PR:**
 - Techniques that have stopped working (model may have changed)
@@ -2078,4 +2078,4 @@ This guide is a living document. If you have a technique, prompt pattern, or fin
 
 ---
 
-*Last updated: June 2026. Suno is a rapidly evolving platform — techniques may change as models update. When something stops working, the model has likely changed, not you.*
+*Last updated: June 2026. Suno is a rapidly evolving platform, techniques may change as models update. When something stops working, the model has likely changed, not you.*
